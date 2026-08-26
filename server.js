@@ -18,6 +18,8 @@ const forgotPasswordRoutes =
     require(
         "./modules/forgotPassword"
     );
+const whatsappRoutes =
+  require("./modules/whatsapp/whatsappRoutes");
 
 const dashboardRoutes =
   require("./dashboard/dashboardRoutes");
@@ -105,6 +107,7 @@ app.use(
     "/api/forgot-password",
     forgotPasswordRoutes
 );
+app.use("/api/whatsapp", whatsappRoutes);
 
 // ==========================================================
 // HTTP SERVER
