@@ -55,11 +55,17 @@ const createPasswordResetTokensTable =
   require(
     "./database/migrations/createPasswordResetTokensTable"
   );
+const createAlertEvidenceTable =
+  require("./database/migrations/createAlertEvidenceTable");
 
 const inspectionRoutes =
   require(
     "./modules/inspection/inspectionRoutes"
   );
+const alertEvidenceRoutes =
+  require("./modules/alertEvidence/alertEvidenceRoutes");
+const alertEvidenceService =
+  require("./modules/alertEvidence/alertEvidenceService");
 
 const initializeSocket =
   require(
@@ -79,9 +85,7 @@ app.use(
   })
 );
 
-app.use(
-  express.json()
-);
+app.use(express.json({ limit: "12mb" }));
 
 app.use(
   express.urlencoded({
@@ -152,6 +156,11 @@ app.use(
 
   inspectionRoutes
 );
+app.use("/api/alert-evidence", alertEvidenceRoutes);
+app.use(
+  "/alert-evidence-files",
+  express.static(alertEvidenceService.evidenceDirectory)
+);
 
 // ==========================================================
 // HEALTH API
@@ -216,6 +225,7 @@ async function startServer() {
     await createUsersTable();
 
     await createPasswordResetTokensTable();
+    await createAlertEvidenceTable();
 
     httpServer.listen(
       PORT,

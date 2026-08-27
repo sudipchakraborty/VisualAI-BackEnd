@@ -141,3 +141,6 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Alert evidence images are runtime data, not source artifacts.
+data/alert-evidence/
